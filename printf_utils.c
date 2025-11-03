@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   printf_utils.c                                     :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ysantos- <ysantos-@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/05 20:59:44 by ysantos-          #+#    #+#             */
-/*   Updated: 2022/09/29 21:13:22 by ysantos-         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "ft_printf.h"
 
 int	f_putnbr(int n)
@@ -28,7 +16,7 @@ int	f_putnbr(int n)
 	return (count);
 }
 
-int	f_putnbr_u(unsigned int n, char *str, LLONG base)
+int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 {
 	int			count;
 	long long	n2;
@@ -40,7 +28,7 @@ int	f_putnbr_u(unsigned int n, char *str, LLONG base)
 }
 
 int	f_putnbr_ul(unsigned long n)
-{	
+{
 	int			count;
 	long long	n2;
 
@@ -56,7 +44,7 @@ int	f_putnbr_ul(unsigned long n)
 }
 
 /* Convert the number (n) to the base (str) acoording to size of base (base) */
-int	base_conversor(LLONG n, char *str, LLONG base)
+int	base_conversor(ssize_t n, char *str, ssize_t base)
 {
 	int	c;
 
