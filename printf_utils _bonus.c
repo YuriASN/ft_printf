@@ -1,5 +1,10 @@
 #include "ft_printf_bonus.h"
 
+int	f_putchar(char c)
+{
+	return (write(1, &c, 1));
+}
+
 int	f_putnbr(int n)
 {
 	int			count;

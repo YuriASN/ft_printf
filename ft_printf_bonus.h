@@ -8,5 +8,8 @@ int	f_putnbr(int n);
 int	base_conversor(ssize_t n, char *str, ssize_t base);
 int	f_putnbr_u(unsigned int n, char *str, ssize_t base);
 int	f_putnbr_ul(unsigned long n);
+int	f_putchar(char c);
+int	f_strlen(char *str);
+int	f_putstr(char *str);
 
 #endif

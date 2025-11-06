@@ -1,10 +1,5 @@
 #include "ft_printf_bonus.h"
 
-static int	f_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
-
 static int	f_strlen(char *str)
 {
 	int	i;
@@ -22,6 +17,23 @@ static int	f_putstr(char *str)
 	if (!str)
 		str = "(null)";
 	return (write(1, str, f_strlen(str)));
+}
+
+static int	print_bonus_arg(va_list *l, char c)
+{
+	if (c == '-')
+		return ();
+	if (c == '0')
+		return ();
+	if (c == '.')
+		return ();
+	if (c == '#')
+		return ();
+	if (c == ' ')
+		return ();
+	if (c == '+')
+		return ();
+	return (0);
 }
 
 static int	print_arg(va_list *l, char c)
@@ -42,7 +54,7 @@ static int	print_arg(va_list *l, char c)
 		return (f_putnbr_ul(va_arg(*l, unsigned long)));
 	if (c == '%')
 		return (write(1, "%", 1));
-	return (0);
+	return (print_bonus_arg(l, c));
 }
 
 int	ft_printf(const char *str, ...)
