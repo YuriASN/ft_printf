@@ -11,5 +11,6 @@ int	f_putnbr_ul(unsigned long n);
 int	f_putchar(char c);
 int	f_strlen(char *str);
 int	f_putstr(char *str);
+int	print_arg(va_list *l, char *c, int *i)
 
 #endif

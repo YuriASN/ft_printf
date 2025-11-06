@@ -19,24 +19,25 @@ static int	f_putstr(char *str)
 	return (write(1, str, f_strlen(str)));
 }
 
-static int	print_bonus_arg(va_list *l, char *c)
+static int	print_bonus_arg(va_list *l, char *c, int *i)
 {
+	//increment i accordingly to the flags, -1 that's already done.
 	if (c[0] == '-')	//in combination with a value sets the chars (next if) after the arg, instead of before
-		return ();
+		return (justfy_left(l, c[1], i));
 	if (f_isdigit(c[0]))	//Gives the argument with minimum X amount of CHARS. In case the first number is 0 and arg is d or i, it adds zero to complement, otherwise add spaces.
-		return ();
+		return (right_width(l, c, i));
 	if (c[0] == '.')	//Gives the number with minimum X amount of DIGITS. adding zeros before the number it self
-		return ();
+		return (digit_amount(l, &c[1], i));
 	if (c[0] == '#')	//Used with x or X flags, it adds 0x or 0X before the conversion respectively, only if value isn't 0.
-		return ();
+		return (base_teller(l, &c[1], i));
 	if (c[0] == ' ')	//puts space before a number if isn't negative. Only works with d or i flags
-		return ();
+		return (print_space(l, c[1], i));
 	if (c[0] == '+')	//puts a '+' before a number if isn't negative. Only works with d or i flags
-		return ();
+		return (print_signal(l, &c[1], i));
 	return (0);
 }
 
-static int	print_arg(va_list *l, char *c)
+int	print_arg(va_list *l, char *c, int *i)
 {
 	if (c[0] == 'c')
 		return (f_putchar(va_arg(*l, int)));
@@ -54,7 +55,7 @@ static int	print_arg(va_list *l, char *c)
 		return (f_putnbr_ul(va_arg(*l, unsigned long)));
 	if (c[0] == '%')
 		return (write(1, "%", 1));
-	return (print_bonus_arg(l, c));
+	return (print_bonus_arg(l, c, i));
 }
 
 int	ft_printf(const char *str, ...)
@@ -69,7 +70,7 @@ int	ft_printf(const char *str, ...)
 	while (str[++i])
 	{
 		if (str[i] == '%')
-			count += print_arg(&l, &str[++i]);
+			count += print_arg(&l, &str[++i], &i);
 		else
 			count += write(1, &str[i], 1);
 	}
