@@ -39,12 +39,7 @@ int	f_putnbr_ul(unsigned long n)
 	long long	n2;
 
 	if (n == 0)
-	{
-		check = write(1, "(nil)", 5);
-		if (check == -1)
-			return (-1);
-		return (5);
-	}
+		return(write(1, "(nil)", 5));
 	count = write(1, "0x", 2);
 	if (count == -1)
 		return (-1);
