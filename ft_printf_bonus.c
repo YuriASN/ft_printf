@@ -40,7 +40,7 @@ static int	print_bonus_arg(va_list *l, char *c, int *i)
 int	print_arg(va_list *l, char *c, int *i)
 {
 	if (c[0] == 'c')
-		return (f_putchar(va_arg(*l, int)));
+		return (write(1, va_arg(*l, int), 1));
 	if (c[0] == 's')
 		return (f_putstr(va_arg(*l, char *)));
 	if (c[0] == 'd' || c[0] == 'i')
@@ -62,6 +62,7 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	int		count;
+	int		last;
 	va_list	l;
 
 	i = -1;
@@ -70,9 +71,12 @@ int	ft_printf(const char *str, ...)
 	while (str[++i])
 	{
 		if (str[i] == '%')
-			count += print_arg(&l, &str[++i], &i);
+			last = print_arg(&l, &str[++i], &i);
 		else
-			count += write(1, &str[i], 1);
+			last = write(1, &str[i], 1);
+		if (last == -1)
+			return (-1);
+		count += last;
 	}
 	va_end(l);
 	return (count);
