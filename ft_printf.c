@@ -49,6 +49,7 @@ int	ft_printf(const char *str, ...)
 {
 	int		i;
 	int		count;
+	int		last;
 	va_list	l;
 
 	i = -1;
@@ -57,15 +58,20 @@ int	ft_printf(const char *str, ...)
 	while (str[++i])
 	{
 		if (str[i] == '%')
-			count += print_arg(&l, str[++i]);
+			last = print_arg(&l, str[++i]);
 		else
-			count += write(1, &str[i], 1);
+			last = write(1, &str[i], 1);
+		if (last == -1)
+			return (-1);
+		count += last;
 	}
 	va_end(l);
 	return (count);
 }
 
-/* int	main(void)
+
+/* #include <stdio.h>
+int	main(void)
 {
 	char	*str = "Hello world!";
 	int		i = 145;
@@ -74,5 +80,7 @@ int	ft_printf(const char *str, ...)
 	x = printf("Essa porra vai dar %s | %i | addrs:%p\n", str, i, &i);
 	i = ft_printf("Essa porra vai dar %s | %i | addrs:%p\n", str, i, &i);
 	printf("i = %i  x = %i\n", i, x);
+
 	return (0);
-} */
+}
+ */
