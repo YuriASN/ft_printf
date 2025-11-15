@@ -1,10 +1,10 @@
 #include "ft_printf.h"
 
-static int	f_putchar(char c)
+/* static int	f_putchar(char c)
 {
 	return (write(1, &c, 1));
 }
-
+ */
 static int	f_strlen(char *str)
 {
 	int	i;
@@ -27,7 +27,7 @@ static int	f_putstr(char *str)
 static int	print_arg(va_list *l, char c)
 {
 	if (c == 'c')
-		return (f_putchar(va_arg(*l, int)));
+		return (write(1, (va_arg(*l, int)), 1));
 	if (c == 's')
 		return (f_putstr(va_arg(*l, char *)));
 	if (c == 'd' || c == 'i')
@@ -52,6 +52,8 @@ int	ft_printf(const char *str, ...)
 	int		last;
 	va_list	l;
 
+	if (!str)
+		return (-1);
 	i = -1;
 	count = 0;
 	va_start(l, str);

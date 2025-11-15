@@ -34,7 +34,7 @@ static int	print_bonus_arg(va_list *l, char *c, int *i)
 		return (print_space(l, c[1], i));
 	if (c[0] == '+')	//puts a '+' before a number if isn't negative. Only works with d or i flags
 		return (print_signal(l, &c[1], i));
-	return (0);
+	return (0);	//change to write the ""
 }
 
 int	print_arg(va_list *l, char *c, int *i)
@@ -65,6 +65,8 @@ int	ft_printf(const char *str, ...)
 	int		last;
 	va_list	l;
 
+	if (!str)
+		return (-1);
 	i = -1;
 	count = 0;
 	va_start(l, str);
