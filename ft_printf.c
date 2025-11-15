@@ -1,5 +1,4 @@
 #include "ft_printf.h"
-#include "libft/libft.h"
 
 static int	print_arg(va_list *l, char c)
 {
