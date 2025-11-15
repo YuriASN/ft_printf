@@ -1,35 +1,12 @@
 #include "ft_printf.h"
-
-/* static int	f_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
- */
-static int	f_strlen(char *str)
-{
-	int	i;
-
-	if (!str)
-		return (0);
-	i = 0;
-	while (str[i])
-		++i;
-	return (i);
-}
-
-static int	f_putstr(char *str)
-{
-	if (!str)
-		str = "(null)";
-	return (write(1, str, f_strlen(str)));
-}
+#include "libft/libft.h"
 
 static int	print_arg(va_list *l, char c)
 {
 	if (c == 'c')
 		return (write(1, (va_arg(*l, int)), 1));
 	if (c == 's')
-		return (f_putstr(va_arg(*l, char *)));
+		return (ft_putstr_fd(va_arg(*l, char *), 1));
 	if (c == 'd' || c == 'i')
 		return (f_putnbr(va_arg(*l, int)));
 	if (c == 'u')
