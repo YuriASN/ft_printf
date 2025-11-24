@@ -1,5 +1,23 @@
 #include "ft_printf.h"
 
+/* Convert the number (n) to the base (str) acoording to size of base (base) */
+static int	base_conversor(ssize_t n, char *str, ssize_t base)
+{
+	int	c;
+	int	check;
+
+	c = 0;
+	if (n >= base)
+		c = base_conversor(n / base, str, base);
+	if (c == -1)
+		return (-1);
+	check = write(1, &str[n % base], 1);
+	if (check == -1)
+		return (-1);
+	c += check;
+	return (c);
+}
+
 int	f_putnbr(int n)
 {
 	int			count;
@@ -49,22 +67,4 @@ int	f_putnbr_ul(unsigned long n)
 		return (-1);
 	count += check;
 	return (count);
-}
-
-/* Convert the number (n) to the base (str) acoording to size of base (base) */
-int	base_conversor(ssize_t n, char *str, ssize_t base)
-{
-	int	c;
-	int	check;
-
-	c = 0;
-	if (n >= base)
-		c = base_conversor(n / base, str, base);
-	if (c == -1)
-		return (-1);
-	check = write(1, &str[n % base], 1);
-	if (check == -1)
-		return (-1);
-	c += check;
-	return (c);
 }
