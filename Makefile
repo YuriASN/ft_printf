@@ -9,7 +9,7 @@ BNOBJ= $(BONUS:.c=.o)
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -g
 
-.PHONY all bonus libft clean fclean re rebonus
+.PHONY: all bonus libft clean fclean re rebonus
 
 all: $(NAME)
 
