@@ -27,6 +27,6 @@ The libft lib has to be linked along with printf when a program is created. As a
 •%+ Forces to preceed the result with a plus or minus sign (+ or -) even for positive numbers. By default, only negative numbers are preceded with a - sign.  
 
 #### These must work with combinations of any of the 3 flags.  
-•%- Left-justify within the given field width; Right justification is the default.  
-•%0 Left-pads the number with zeroes (0) instead of spaces when padding is specified.  
-•%.For integer specifiers (d, i, o, u, x, X): precision specifies the minimum number of digits to be written. If the value to be written is shorter than this number, the result is padded with leading zeros. The value is not truncated even if the result is longer. A precision of 0 means that no character is written for the value 0.  
+•%-		Left-justify within the given field width; Right justification is the default.  
+•%nbr	Right-justify given argument leaving the width of the full size of number passed. If first value is 0 and argument is a number.  
+•%.		For integer specifiers (d, i, o, u, x, X): precision specifies the minimum number of digits to be written. If the value to be written is shorter than this number, the result is padded with leading zeros. The value is not truncated even if the result is longer. A precision of 0 means that no character is written for the value 0.  
