@@ -1,10 +1,10 @@
 #include "ft_printf_bonus.h"
 
-static int	print_bonus_arg(va_list *l, char *c, int *i)
+static int	print_bonus_arg(va_list *l, const char *c, int *i)
 {
 	//increment i accordingly to the flags, -1 that's already done.
 	if (c[0] == '-')	//in combination with a value sets the chars (next if) after the arg, instead of before
-		return (justfy_left(l, c[1], i));
+		return (justfy_left(l, &c[1], i));
 	if (ft_isdigit(c[0]))	//Gives the argument with minimum X amount of CHARS. In case the first number is 0 and arg is d or i, it adds zero to complement, otherwise add spaces.
 		return (justfy_right(l, c, i));
 	if (c[0] == '.')	//Gives the number with minimum X amount of DIGITS. adding zeros before the number it self
@@ -12,20 +12,25 @@ static int	print_bonus_arg(va_list *l, char *c, int *i)
 	if (c[0] == '#')	//Used with x or X flags, it adds 0x or 0X before the conversion respectively, only if value isn't 0.
 		return (base_teller(l, &c[1], i));
 	if (c[0] == ' ')	//puts space before a number if isn't negative. Only works with d or i flags
-		return (print_space(l, c[1], i));
+		return (print_space(l, &c[1], i));
 	if (c[0] == '+')	//puts a '+' before a number if isn't negative. Only works with d or i flags
 		return (print_signal(l, &c[1], i));
 	return (write(1, "", 0));	//change to write the ""
 }
 
-int	print_arg(va_list *l, char *c, int *i)
+int	print_arg(va_list *l, const char *c, int *i)
 {
+	char	letter;
+
 	if (c[0] == 'c')
-		return (write(1, va_arg(*l, int), 1));
+	{
+		letter = (char)va_arg(*l, int);
+		return (write(1, &letter, 1));
+	}
 	if (c[0] == 's')
 		return (ft_putstr_fd(va_arg(*l, char *), 1));
 	if (c[0] == 'd' || c[0] == 'i')
-		return (f_putnbr(va_arg(*l, int)));
+		return (ft_putnbr_fd(va_arg(*l, int), 1));
 	if (c[0] == 'u')
 		return (f_putnbr_u(va_arg(*l, unsigned int), "0123456789", 10));
 	if (c[0] == 'x')

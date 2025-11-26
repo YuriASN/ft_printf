@@ -4,17 +4,15 @@
 static void	get_conversion(ssize_t nbr, char base, char *conv, int size)
 {
 	char	*b;
-	int		i;
 
-	i = -1;
 	if (nbr < 0)
 	{
 		conv[0] = '-';
 		get_conversion(nbr * -1, base, &conv[1], size);
 	}
-	if (base = 'x')
+	if (base == 'x')
 		b = "0123456789abcdef";
-	else if (base = 'X')
+	else if (base == 'X')
 		b = "0123456789ABCDEF";
 	else
 		b = "0123456798";
@@ -25,7 +23,7 @@ static void	get_conversion(ssize_t nbr, char base, char *conv, int size)
 
 /* '-' In combination with a value sets the chars (next if)
 after the arg, instead of before */
-int	justfy_left(va_list *l, char *s, int *i)
+int	justfy_left(va_list *l, const char *s, int *i)
 {
 	int	width;
 	int	j;
@@ -49,7 +47,7 @@ int	justfy_left(va_list *l, char *s, int *i)
 /* Gives the argument with minimum X amount of CHARS. 
 In case the first number is 0 and arg is d or i, it adds
 zero to complement, otherwise add spaces. */
-int	justfy_right(va_list *l, char *s, int *i)
+int	justfy_right(va_list *l, const char *s, int *i)
 {
 	char	nbr_c[20];
 	int		full_width;
@@ -80,8 +78,10 @@ int	justfy_right(va_list *l, char *s, int *i)
 		{
 			arg_width += 2;
 			if (s[j] == 'X')
+			{
 				if (write(1, "0X", 2) == -1)
 					return (-1);
+			}
 			else
 				if (write(1, "0x", 2) == -1)
 					return (-1);
@@ -110,7 +110,7 @@ int	justfy_right(va_list *l, char *s, int *i)
 	//puts the argument
 	if (nbr_c[0] && ft_putstr_fd(nbr_c, 1) == -1)
 		return (-1);
-	else if (print_arg(l, s[j], i) == -1)
+	else if (print_arg(l, &s[j], i) == -1)
 		return (-1);
 	return (full_width);
 }
@@ -118,26 +118,26 @@ int	justfy_right(va_list *l, char *s, int *i)
 /* '.' Gives the number with minimum X amount of DIGITS.
 Adding zeros before the number it self.
 Only works with numbers */
-int	digit_amount(va_list *l, char *s, int *i)
+int	digit_amount(va_list *l, const char *s, int *i)
 {
 	char	nbr_c[20];
 	int		width;
 	int		j;
 
-	*i++;
+	(*i)++;
 	if (ft_isdigit(s[0]))
 		width = ft_atoi(s);
 	j = -1;
 	while (ft_isdigit(s[++j]))
-		++*i;
+		(*i)++;
 	ft_bzero(nbr_c, 20);
 	if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u'
 		|| s[j] == 'x' || s[j] == 'X')
 	{
 		if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u')
-			get_convertion(va_arg(*l, ssize_t), s[j], nbr_c, 10);
-		else 
-			get_convertion(va_arg(*l, ssize_t), s[j], nbr_c, 16);
+			get_conversion(va_arg(*l, ssize_t), s[j], nbr_c, 10);
+		else
+			get_conversion(va_arg(*l, ssize_t), s[j], nbr_c, 16);
 		j = ft_strlen(nbr_c);
 		while (j++ < width)
 			if (write(1, "0", 1) == -1)
@@ -159,11 +159,11 @@ int	digit_amount(va_list *l, char *s, int *i)
  * Pointer to current index of string
  * @return
  * How many chars where printed, or -1 in case of error. */
-int	base_teller(va_list *l, char *s, int *i)
+int	base_teller(va_list *l, const char *s, int *i)
 {
 	int	check;
 
-	*i++;
+	(*i)++;
 	if (s[0] == 'x')
 	{
 		if (write(1, "0x", 2) == -1)
@@ -188,36 +188,36 @@ int	base_teller(va_list *l, char *s, int *i)
 }
 
 /* puts space before a number if isn't negative. Only works with d or i flags */
-int	print_space(va_list *l, char *s, int *i)
+int	print_space(va_list *l, const char *s, int *i)
 {
 	int	nbr;
 	int	check;
 
-	*i++;
+	(*i)++;
 	if (s[0] != 'd' && s[0] != 'i')
 		return (print_arg(l, s, i));
 	nbr = va_arg(*l, int);
 	if (nbr >= 0)
 		write(1, " ", 1);
-	check = ft_putnbr(nbr);
+	check = ft_putnbr_fd(nbr, 1);
 	if (check == -1)
 		return (-1);
 	return (check + 1);
 }
 
 /* puts a '+' before a number if isn't negative. Only works with d or i flags */
-int	print_signal(va_list *l, char *s, int *i)
+int	print_signal(va_list *l, const char *s, int *i)
 {
 	int	nbr;
 	int	check;
 
-	*i++;
+	(*i)++;
 	if (s[0] != 'd' && s[0] != 'i')
-		return ( print_arg(l, s, i));
+		return (print_arg(l, s, i));
 	nbr = va_arg(*l, int);
 	if (nbr >= 0)
 		write(1, "+", 1);
-	check = ft_putnbr(nbr);
+	check = ft_putnbr_fd(nbr, 1);
 	if (check == -1)
 		return (-1);
 	return (check + 1);

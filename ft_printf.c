@@ -2,8 +2,13 @@
 
 static int	print_arg(va_list *l, char c)
 {
+	char	letter;
+
 	if (c == 'c')
-		return (write(1, (va_arg(*l, int)), 1));
+	{
+		letter = (char)va_arg(*l, int);
+		return (write(1, &letter, 1));
+	}
 	if (c == 's')
 		return (ft_putstr_fd(va_arg(*l, char *), 1));
 	if (c == 'd' || c == 'i')
