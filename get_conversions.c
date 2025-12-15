@@ -1,7 +1,21 @@
 #include "ft_printf_bonus.h"
 
+/** @brief Get how many times a number can be divided by other. */
+static int	hex_size(unsigned long nbr)
+{
+	int	count;
+
+	count = 1;
+	while (nbr / 16)
+	{
+		count++;
+		nbr /= 16;
+	}
+	return (count);
+}
+
 /** @brief Get's the converted number to it's base 0, x or X. */
-void	get_u_long(unsigned long n, char base, char *conv, int sign)
+void	get_u_long(unsigned long n, char base, char *conv)
 {
 	char			*b;
 	unsigned long	size;
@@ -15,9 +29,9 @@ void	get_u_long(unsigned long n, char base, char *conv, int sign)
 		b = "0123456789ABCDEF";
 	else
 		b = "0123456798";
-	if (n > size)
-		get_u_long(n / size, base, conv, sign);
-	conv[get_digits(n) - sign] = b[n % size];
+	if (n >= size)
+		get_u_long(n / size, base, conv);
+	conv[hex_size(n) - 1] = b[n % size];
 }
 
 /** @brief Get's the converted number to it's base 0, x or X. */

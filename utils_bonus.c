@@ -19,7 +19,7 @@ int	justfy_left(va_list *l, const char *s, int *i)
 	while (j++ < width)
 		if (write(1, " ", 1) == -1)
 			return (-1);
-	return (j);
+	return (j - 1);
 }
 
 
@@ -40,32 +40,26 @@ int	justfy_right(va_list *l, const char *s, int *i)
 	while (ft_isdigit(s[++j]))
 		++*i;
 	if (s[j] == 'X')
-		get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 1);
+		get_u_long(va_arg(*l, unsigned long), 'X', nbr_c);
 	else if (s[j] == 'x' || s[j] == 'p')
-		get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 1);
+		get_u_long(va_arg(*l, unsigned long), 'x', nbr_c);
 	else if (s[j] == 'u')
-		get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 1);
+		get_u_long(va_arg(*l, unsigned long), '0', nbr_c);
 	else if (s[j] == 'd' || s[j] == 'i')
 		get_nbr(va_arg(*l, int), '0', nbr_c, 1);
-//if it's number or hex	|0x0000007ffdd8952118| and flag 0
+//if it's number or hex	|0x0000007ffdd8952118| and flag 0, add 0
 	if (s[0] == '0' && (s[j] == 'd' || s[j] == 'i' || s[j] == 'u'
-		|| s[j] == 'x' || s[j] == 'X' || s[j] == 'p'))
+			|| s[j] == 'x' || s[j] == 'X' || s[j] == 'p'))
 	{
 		//if value after . is 0 only and number is 0 = writes nothing
 		if (nbr_c[0] == '0' && s[-1] == '.' && s[0] == '0' && !ft_isdigit(s[1]))
 			return (0);
 		arg_width = ft_strlen(nbr_c);
-		if (s[j] == 'x' || s[j] == 'X' || s[j] == 'p')
+		if (s[j] == 'p')
 		{
 			arg_width += 2;
-			if (s[j] == 'X')
-			{
-				if (write(1, "0X", 2) == -1)
-					return (-1);
-			}
-			else
-				if (write(1, "0x", 2) == -1)
-					return (-1);
+			if (write(1, "0x", 2) == -1)
+				return (-1);
 		}
 		while (arg_width++ < full_width)
 			if (write(1, "0", 1) == -1)
@@ -115,11 +109,11 @@ int	digit_amount(va_list *l, const char *s, int *i)
 		|| s[j] == 'x' || s[j] == 'X')
 	{
 		if (s[j] == 'X')
-			get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 1);
+			get_u_long(va_arg(*l, unsigned long), 'X', nbr_c);
 		else if (s[j] == 'x' || s[j] == 'p')
-			get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 1);
+			get_u_long(va_arg(*l, unsigned long), 'x', nbr_c);
 		else if (s[j] == 'u')
-			get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 1);
+			get_u_long(va_arg(*l, unsigned long), '0', nbr_c);
 		else if (s[j] == 'd' || s[j] == 'i')
 			get_nbr(va_arg(*l, int), '0', nbr_c, 1);
 		j = ft_strlen(nbr_c);
@@ -162,7 +156,7 @@ int	base_teller(va_list *l, const char *s, int *i)
 		if (write(1, "0X", 2) == -1)
 			return (-1);
 		check = f_putnbr_u(va_arg(*l, unsigned int),
-			"0123456789ABCDEF", 16) + 2;
+				"0123456789ABCDEF", 16) + 2;
 		if (check == -1)
 			return (-1);
 		return (check + 2);
