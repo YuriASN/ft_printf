@@ -1,26 +1,5 @@
 #include "ft_printf_bonus.h"
 
-/** @brief Get's the converted number to it's base x or X*/
-static void	get_conversion(ssize_t nbr, char base, char *conv, int size)
-{
-	char	*b;
-
-	if (nbr < 0)
-	{
-		conv[0] = '-';
-		get_conversion(nbr * -1, base, &conv[1], size);
-	}
-	if (base == 'x')
-		b = "0123456789abcdef";
-	else if (base == 'X')
-		b = "0123456789ABCDEF";
-	else
-		b = "0123456798";
-	if (nbr >= size)
-		get_conversion(nbr / size, base, &conv[1], size);
-	conv[0] = b[nbr % size];
-}
-
 /* '-' In combination with a value sets the chars (next if)
 after the arg, instead of before */
 int	justfy_left(va_list *l, const char *s, int *i)
@@ -61,11 +40,13 @@ int	justfy_right(va_list *l, const char *s, int *i)
 	while (ft_isdigit(s[++j]))
 		++*i;
 	if (s[j] == 'X')
-		get_conversion(va_arg(*l, ssize_t), 'X', nbr_c, 16);
+		get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 1);
 	else if (s[j] == 'x' || s[j] == 'p')
-		get_conversion(va_arg(*l, ssize_t), 'x', nbr_c, 16);
-	else if (s[j] == 'd' || s[j] == 'i' || s[j] == 'u')
-		get_conversion(va_arg(*l, ssize_t), '0', nbr_c, 10);
+		get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 1);
+	else if (s[j] == 'u')
+		get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 1);
+	else if (s[j] == 'd' || s[j] == 'i')
+		get_nbr(va_arg(*l, int), '0', nbr_c, 1);
 //if it's number or hex	|0x0000007ffdd8952118| and flag 0
 	if (s[0] == '0' && (s[j] == 'd' || s[j] == 'i' || s[j] == 'u'
 		|| s[j] == 'x' || s[j] == 'X' || s[j] == 'p'))
@@ -101,16 +82,15 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			va_end(cp);
 		}
 		else if (s[j] == 'd' || s[j] == 'i' || s[j] == 'u'
-				|| s[j] == 'x' || s[j] == 'X' || s[j] == 'p')
+			|| s[j] == 'x' || s[j] == 'X' || s[j] == 'p')
 			arg_width = ft_strlen(nbr_c);
-		while (++arg_width < full_width)
+		while (arg_width++ < full_width)
 			if (write(1, " ", 1) == -1)
 				return (-1);
 	}
-	//puts the argument
 	if (nbr_c[0] && ft_putstr_fd(nbr_c, 1) == -1)
 		return (-1);
-	else if (print_arg(l, &s[j], i) == -1)
+	if (!nbr_c[0] && print_arg(l, &s[j], i) == -1)
 		return (-1);
 	return (full_width);
 }
@@ -134,10 +114,14 @@ int	digit_amount(va_list *l, const char *s, int *i)
 	if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u'
 		|| s[j] == 'x' || s[j] == 'X')
 	{
-		if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u')
-			get_conversion(va_arg(*l, ssize_t), s[j], nbr_c, 10);
-		else
-			get_conversion(va_arg(*l, ssize_t), s[j], nbr_c, 16);
+		if (s[j] == 'X')
+			get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 1);
+		else if (s[j] == 'x' || s[j] == 'p')
+			get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 1);
+		else if (s[j] == 'u')
+			get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 1);
+		else if (s[j] == 'd' || s[j] == 'i')
+			get_nbr(va_arg(*l, int), '0', nbr_c, 1);
 		j = ft_strlen(nbr_c);
 		while (j++ < width)
 			if (write(1, "0", 1) == -1)
