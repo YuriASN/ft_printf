@@ -3,6 +3,8 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
+//remove after done
+# include <stdio.h>
 int		ft_printf(const char *str, ...);
 int		print_arg(va_list *l, const char *c, int *i);
 int		get_digits(ssize_t n);
@@ -14,7 +16,7 @@ int		digit_amount(va_list *l, const char *s, int *i);
 int		base_teller(va_list *l, const char *s, int *i);
 int		print_space(va_list *l, const char *s, int *i);
 int		print_signal(va_list *l, const char *s, int *i);
-void	get_u_long(unsigned long n, char base, char *conv);
-void	get_nbr(int n, char base, char *conv, int sign);
+void	get_u_long(unsigned long n, char base, char *conv, int teller);
+void	get_nbr(int n, char *conv, int sign);
 
 #endif
