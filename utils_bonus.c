@@ -53,6 +53,7 @@ int	justfy_right(va_list *l, const char *s, int *i)
 
 	teller = 0;
 	zero_flag = 0;
+	arg_width = 0;
 	full_width = ft_atoi(s);
 	ft_bzero(nbr_c, 20);
 	if (s[-1] == '#')
