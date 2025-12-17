@@ -13,19 +13,24 @@ CFLAGS = -Wall -Wextra -Werror -g
 
 all: $(NAME)
 
-$(NAME): $(OBJ) libft
-	@ar rcs $(NAME) $(OBJ)
+$(NAME): libft $(OBJ)
+	@ar rcs $(NAME) libft/*o $(OBJ)
 	@echo "\e[0;32mPrintf compiled!\nDon't forget to link Libft when creating a program.\e[0m"
 
-bonus: $(BNOBJ) libft
-	@ar rcs $(NAME) $(BNOBJ)
+bonus: libft $(BNOBJ)
+	@ar rcs $(NAME) libft/*o $(BNOBJ)
 	@echo "\e[0;32mPrintf bonus compiled!\nDon't forget to link Libft when creating a program.\e[0m"
 
 libft:
 	@if [ ! -d libft ]; then \
-		echo "Libft directory missing! Cloning the submodule now..."; \
+		echo "LIBFT:	\e[0;31mLibft directory missing! Cloning the submodule now...\e[0m"; \
 		git submodule update --init; \
-		echo "Submodule cloned."; \
+		echo "LIBFT:	\e[0;32mSubmodule cloned.\e[0m"; \
+	fi
+	@if [ `ls -A libft/ && wc -l` == "0" ]; then \
+		echo "LIBFT:	\e[0;31mLibft directory is empty! Downloading submodule archives now...\e[0m"; \
+		git submodule foreach git checkout main && git submodule foreach git fetch  && git submodule foreach git reset --hard origin/main; \
+		echo "LIBFT:	\e[0;32mSubmodule ready.\e[0m"; \
 	fi
 	$(MAKE) -C libft/ --no-print-directory;
 
@@ -36,7 +41,7 @@ libft:
 
 clean:
 	@/bin/rm -f *.o
-	@$(MAKE) clean -Clibft/ --no-print-directory
+#	@$(MAKE) clean -Clibft/ --no-print-directory
 	@echo "\e[0;33mPrintf clean done!\e[0m"
 
 fclean: clean
