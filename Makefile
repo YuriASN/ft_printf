@@ -15,11 +15,11 @@ all: $(NAME)
 
 $(NAME): libft $(OBJ)
 	@ar rcs $(NAME) libft/*o $(OBJ)
-	@echo "\e[0;32mPrintf compiled!\nDon't forget to link Libft when creating a program.\e[0m"
+	@echo "\e[0;32mPrintf compiled!\e[0m"
 
 bonus: libft $(BNOBJ)
 	@ar rcs $(NAME) libft/*o $(BNOBJ)
-	@echo "\e[0;32mPrintf bonus compiled!\nDon't forget to link Libft when creating a program.\e[0m"
+	@echo "\e[0;32mPrintf bonus compiled!\e[0m"
 
 libft:
 	@echo "LIBFT:\e[0;33m Ensuring submodule is initialized...\e[0m"
