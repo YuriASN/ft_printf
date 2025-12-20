@@ -65,12 +65,12 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		++*i;
 		++s;
 	}
-	if (*s == 'X')
-		get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 0);
-	else if (*s == 'x' || *s == 'p')
-		get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 0);
+	if (*s == 'X' || *s == 'x')
+		get_unsig(va_arg(*l, unsigned int), *s, nbr_c);
 	else if (*s == 'u')
-		get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 0);
+		get_unsig(va_arg(*l, unsigned int), '0', nbr_c);
+	else if (*s == 'p')
+		get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 	else if (*s == 'd' || *s == 'i')
 		get_nbr(va_arg(*l, int), nbr_c, 1);
 //fprintf(stderr, "Char: %c, teller: %d\n", *s, teller);
@@ -151,12 +151,12 @@ int	digit_amount(va_list *l, const char *s, int *i)
 	if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u'
 		|| s[j] == 'x' || s[j] == 'X')
 	{
-		if (s[j] == 'X')
-			get_u_long(va_arg(*l, unsigned long), 'X', nbr_c, 0);
-		else if (s[j] == 'x' || s[j] == 'p')
-			get_u_long(va_arg(*l, unsigned long), 'x', nbr_c, 0);
+		if (s[j] == 'X' || s[j] == 'x')
+			get_unsig(va_arg(*l, unsigned int), s[j], nbr_c);
 		else if (s[j] == 'u')
-			get_u_long(va_arg(*l, unsigned long), '0', nbr_c, 0);
+			get_unsig(va_arg(*l, unsigned int), '0', nbr_c);
+		else if (s[j] == 'p')
+			get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 		else if (s[j] == 'd' || s[j] == 'i')
 			get_nbr(va_arg(*l, int), nbr_c, 1);
 //fprintf(stderr, "s[j] = %c, j = %d, nbr = %s\n", s[j], j, nbr_c);

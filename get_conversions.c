@@ -1,7 +1,7 @@
 #include "ft_printf_bonus.h"
 
 /** @brief Get how many times a number can be divided by other. */
-static int	hex_size(unsigned long nbr)
+static int	hex_size_long(unsigned long nbr)
 {
 	int	count;
 
@@ -14,11 +14,42 @@ static int	hex_size(unsigned long nbr)
 	return (count);
 }
 
-/** @brief Get's the converted number to it's base 0, x or X. */
-void	get_u_long(unsigned long n, char base, char *conv, int teller)
+/** @brief Get how many times a number can be divided by other. */
+static int	convert_size_unsig(unsigned int nbr, char base)
+{
+	int	count;
+
+	count = 1;
+	if (base == '0')
+	{
+		while (nbr / 10)
+		{
+			count++;
+			nbr /= 10;
+		}
+	}
+	else
+	{
+		while (nbr / 16)
+		{
+			count++;
+			nbr /= 16;
+		}
+	}
+	return (count);
+}
+
+/** @brief Get's the converted number to it's base 0, x or X.
+ * @param n
+ * Unsigned int to be converted to char*
+ * @param base
+ * Letter giving the base to be converted to.
+ * @param conv
+ * String that conversion will be set on.*/
+void	get_unsig(unsigned int n, char base, char *conv)
 {
 	char			*b;
-	unsigned long	size;
+	unsigned int	size;
 //fprintf(stderr, "n = %ld\n", n);
 	size = 10;
 	if (base == 'x' || base == 'X')
@@ -30,8 +61,25 @@ void	get_u_long(unsigned long n, char base, char *conv, int teller)
 	else
 		b = "0123456789";
 	if (n >= size)
-		get_u_long(n / size, base, conv, teller);
-	conv[hex_size(n) + teller - 1] = b[n % size];
+		get_unsig(n / size, base, conv);
+	conv[convert_size_unsig(n, base) - 1] = b[n % size];
+}
+
+/** @brief Get's the converted number to it's hex base.
+ * @param n
+ * Unsigned long to be converted to char*
+ * @param conv
+ * String that conversion will be set on. */
+void	get_unsig_long(unsigned long n, char *conv)
+{
+	char			*b;
+	unsigned long	size;
+//fprintf(stderr, "n = %ld\n", n);
+	size = 16;
+	b = "0123456789abcdef";
+	if (n >= size)
+		get_unsig_long(n / size, conv);
+	conv[hex_size_long(n) - 1] = b[n % size];
 }
 
 /** @brief Get's the converted number to it's base 0, x or X. */
