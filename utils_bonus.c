@@ -124,8 +124,6 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		return (-1);
 	if (!nbr_c[0] && print_arg(l, s, i) == -1)
 		return (-1);
-	if (full_width < ft_strlen(nbr_c))
-		full_width = ft_strlen(nbr_c);
 	if (arg_width >= full_width)
 		return (arg_width);
 	return (full_width);
