@@ -20,7 +20,7 @@ int	justfy_left(va_list *l, const char *s, int *i)
 	}
 	if (ft_isdigit(s[0]))
 		width = ft_atoi(s);
-	else
+	else				///«debug
 		fprintf(stderr, "Deu erro: util_bonus:24\n");
 	j = -1;
 	while (ft_isdigit(s[++j]))
@@ -32,10 +32,10 @@ int	justfy_left(va_list *l, const char *s, int *i)
 		if (write(1, "0X", 2) == -1)
 			return (-1);
 	j = print_arg(l, &s[j], i);
-	while (j++ < width - flag_teller)
-		if (write(1, " ", 1) == -1)
+	while (j < width - flag_teller)
+		if (++j && write(1, " ", 1) == -1)
 			return (-1);
-	return (j + flag_teller - 1);
+	return (j + flag_teller);
 }
 
 
@@ -73,7 +73,6 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 	else if (*s == 'd' || *s == 'i')
 		get_nbr(va_arg(*l, int), nbr_c, 1);
-//fprintf(stderr, "Char: %c, teller: %d\n", *s, teller);
 //if it's number or hex	|0x0000007ffdd8952118| and flag 0, add 0
 	if (zero_flag && (*s == 'd' || *s == 'i' || *s == 'u'
 			|| *s == 'x' || *s == 'X' || *s == 'p'))
@@ -94,8 +93,8 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			if (write(1, "0x", 2) == -1)
 				return (-1);
 		}
-		while (arg_width++ < full_width)
-			if (write(1, "0", 1) == -1)
+		while (arg_width < full_width)
+			if (++arg_width && write(1, "0", 1) == -1)
 				return (-1);
 	}
 	else			//will add spaces
@@ -111,8 +110,8 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		else if (*s == 'd' || *s == 'i' || *s == 'u'
 			|| *s == 'x' || *s == 'X' || *s == 'p')
 			arg_width = ft_strlen(nbr_c);
-		while (arg_width++ < full_width - teller)
-			if (write(1, " ", 1) == -1)
+		while (arg_width < full_width - teller)
+			if (arg_width++ && write(1, " ", 1) == -1)
 				return (-1);
 		if ((teller && *s == 'x') || *s == 'p')
 			if (write(1, "0x", 2) == -1)
@@ -125,6 +124,10 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		return (-1);
 	if (!nbr_c[0] && print_arg(l, s, i) == -1)
 		return (-1);
+	if (full_width < ft_strlen(nbr_c))
+		full_width = ft_strlen(nbr_c);
+	if (arg_width >= full_width)
+		return (arg_width);
 	return (full_width);
 }
 
@@ -159,7 +162,6 @@ int	digit_amount(va_list *l, const char *s, int *i)
 			get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 		else if (s[j] == 'd' || s[j] == 'i')
 			get_nbr(va_arg(*l, int), nbr_c, 1);
-//fprintf(stderr, "s[j] = %c, j = %d, nbr = %s\n", s[j], j, nbr_c);
 		if (teller && s[j] == 'x')
 		{
 			if (write(1, "0x", 2) == -1)
@@ -171,12 +173,14 @@ int	digit_amount(va_list *l, const char *s, int *i)
 				return (-1);
 		}
 		j = ft_strlen(nbr_c);
-		while (j++ < width)
-			if (write(1, "0", 1) == -1)
+		while (j < width)
+			if (++j && write(1, "0", 1) == -1)
 				return (-1);
 		if (write(1, nbr_c, ft_strlen(nbr_c)) == -1)
 			return (-1);
 	}
+	if (j >= width)
+		return (j);
 	return (width);
 }
 

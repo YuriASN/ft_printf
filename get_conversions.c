@@ -1,6 +1,8 @@
 #include "ft_printf_bonus.h"
 
-/** @brief Get how many times a number can be divided by other. */
+/** @brief Get the amount of digits the number will have in a base.
+ * @param nbr
+ * Number to check for amount digits in hex base. */
 static int	hex_size_long(unsigned long nbr)
 {
 	int	count;
@@ -14,7 +16,11 @@ static int	hex_size_long(unsigned long nbr)
 	return (count);
 }
 
-/** @brief Get how many times a number can be divided by other. */
+/** @brief Get the amount of digits the number will have in a base.
+ * @param nbr
+ * Number to check for amount of digits in given base.
+ * @param base
+ * Size of the base he will be transformed. */
 static int	convert_size_unsig(unsigned int nbr, char base)
 {
 	int	count;
@@ -39,7 +45,7 @@ static int	convert_size_unsig(unsigned int nbr, char base)
 	return (count);
 }
 
-/** @brief Get's the converted number to it's base 0, x or X.
+/** @brief Converte number to base 0, x or X.
  * @param n
  * Unsigned int to be converted to char*
  * @param base
@@ -65,7 +71,7 @@ void	get_unsig(unsigned int n, char base, char *conv)
 	conv[convert_size_unsig(n, base) - 1] = b[n % size];
 }
 
-/** @brief Get's the converted number to it's hex base.
+/** @brief Converte number to hex base.
  * @param n
  * Unsigned long to be converted to char*
  * @param conv
@@ -82,7 +88,13 @@ void	get_unsig_long(unsigned long n, char *conv)
 	conv[hex_size_long(n) - 1] = b[n % size];
 }
 
-/** @brief Get's the converted number to it's base 0, x or X. */
+/** @brief Transforms the int to char*. No allocation is done.
+ * @param n
+ * Number to be converted in char*.
+ * @param conv
+ * String to store the conversion.
+ * @param sign
+ * Flag to save space for '-' sign. */
 void	get_nbr(int n, char *conv, int sign)
 {
 	char	*b;
