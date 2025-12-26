@@ -1,7 +1,7 @@
 #include "ft_printf.h"
 
 /* Convert the number (n) to the base (str) acoording to size of base (base) */
-static int	base_conversor(ssize_t n, char *str, ssize_t base)
+static int	base_conversor(long long n, char *str, ssize_t base)
 {
 	int	c;
 	int	check;
@@ -18,7 +18,8 @@ static int	base_conversor(ssize_t n, char *str, ssize_t base)
 	return (c);
 }
 
-/* Convert the unsigned long (n) to the base (str) acoording to size of base (base) */
+/* Convert the unsigned long (n) to the base (str)
+	acoording to size of base (base) */
 static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 {
 	int	c;
@@ -26,7 +27,7 @@ static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 
 	c = 0;
 	if (n >= base)
-		c = base_conversor(n / base, str, base);
+		c = ul_base_conversor(n / base, str, base);
 	if (c == -1)
 		return (-1);
 	check = write(1, &str[n % base], 1);
