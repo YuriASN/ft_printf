@@ -105,11 +105,11 @@ void	get_nbr(int n, char *conv, int sign)
 	if (n < 0)
 	{
 		conv[0] = '-';
-		sign--;
+		sign = 0;
 		n *= -1;
 		get_nbr(n, conv, sign);
 	}
-	if (n > size)
+	if (n >= size)
 		get_nbr(n / size, conv, sign);
 	conv[get_digits(n) - sign] = b[n % size];
 }
