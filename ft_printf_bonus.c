@@ -30,7 +30,7 @@ int	print_arg(va_list *l, const char *c, int *i)
 	if (c[0] == 's')
 		return (ft_putstr_fd(va_arg(*l, char *), 1));
 	if (c[0] == 'd' || c[0] == 'i')
-		return (ft_putnbr_fd(va_arg(*l, ssize_t), 1));
+		return (ft_putnbr_fd((ssize_t)(va_arg(*l, int)), 1));
 	if (c[0] == 'u')
 		return (f_putnbr_u(va_arg(*l, unsigned int), "0123456789", 10));
 	if (c[0] == 'x')
