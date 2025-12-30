@@ -18,10 +18,7 @@ int	justfy_left(va_list *l, const char *s, int *i)
 		++*i;
 		++s;
 	}
-	if (ft_isdigit(s[0]))
-		width = ft_atoi(s);
-	else				///«debug
-		fprintf(stderr, "Deu erro: util_bonus:24\n");
+	width = ft_atoi(s);
 	j = -1;
 	while (ft_isdigit(s[++j]))
 		++*i;
@@ -65,6 +62,8 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		++*i;
 		++s;
 	}
+	if (*s == 'p')
+		teller = 2;
 	if (*s == 'X' || *s == 'x')
 		get_unsig(va_arg(*l, unsigned int), *s, nbr_c);
 	else if (*s == 'u')
@@ -82,18 +81,12 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			return (0);
 		arg_width = ft_strlen(nbr_c);
 		if (*s == 'p' || (teller && *s == 'x'))
-		{
-			arg_width += 2;
 			if (write(1, "0x", 2) == -1)
 				return (-1);
-		}
 		if (teller && *s == 'X')
-		{
-			arg_width += 2;
-			if (write(1, "0x", 2) == -1)
+			if (write(1, "0X", 2) == -1)
 				return (-1);
-		}
-		while (arg_width < full_width)
+		while (arg_width + teller < full_width)
 			if (++arg_width && write(1, "0", 1) == -1)
 				return (-1);
 	}
@@ -117,15 +110,15 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			if (write(1, "0x", 2) == -1)
 				return (-1);
 		if (teller && *s == 'X')
-			if (write(1, "0x", 2) == -1)
+			if (write(1, "0X", 2) == -1)
 				return (-1);
 	}
 	if (nbr_c[0] && ft_putstr_fd(nbr_c, 1) == -1)
 		return (-1);
 	if (!nbr_c[0] && print_arg(l, s, i) == -1)
 		return (-1);
-	if (arg_width >= full_width)
-		return (arg_width);
+	if (arg_width + teller >= full_width)
+		return (arg_width + teller);
 	return (full_width);
 }
 
