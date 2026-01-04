@@ -142,8 +142,7 @@ int	digit_amount(va_list *l, const char *s, int *i)
 	(*i)++;
 	if (s[-2] == '#')
 		teller = 2;
-	if (ft_isdigit(s[0]))
-		width = ft_atoi(s);
+	width = ft_atoi(s);
 	j = -1;
 	while (ft_isdigit(s[++j]))
 		(*i)++;
