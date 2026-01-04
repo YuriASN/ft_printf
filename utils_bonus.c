@@ -104,7 +104,7 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			|| *s == 'x' || *s == 'X' || *s == 'p')
 			arg_width = ft_strlen(nbr_c);
 		while (arg_width < full_width - teller)
-			if (arg_width++ && write(1, " ", 1) == -1)
+			if (++arg_width && write(1, " ", 1) == -1)
 				return (-1);
 		if ((teller && *s == 'x') || *s == 'p')
 			if (write(1, "0x", 2) == -1)
