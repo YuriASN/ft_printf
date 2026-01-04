@@ -18,6 +18,6 @@ int		print_space(va_list *l, const char *s, int *i);
 int		print_signal(va_list *l, const char *s, int *i);
 void	get_unsig(unsigned int n, char base, char *conv);
 void	get_unsig_long(unsigned long n, char *conv);
-void	get_nbr(int n, char *conv, int sign);
+void	get_nbr(ssize_t n, char *conv, int sign);
 
 #endif

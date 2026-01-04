@@ -95,7 +95,7 @@ void	get_unsig_long(unsigned long n, char *conv)
  * String to store the conversion.
  * @param sign
  * Flag to save space for '-' sign. */
-void	get_nbr(int n, char *conv, int sign)
+void	get_nbr(ssize_t n, char *conv, int sign)
 {
 	char	*b;
 	int		size;

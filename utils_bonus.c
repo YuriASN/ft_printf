@@ -71,7 +71,7 @@ int	justfy_right(va_list *l, const char *s, int *i)
 	else if (*s == 'p')
 		get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 	else if (*s == 'd' || *s == 'i')
-		get_nbr(va_arg(*l, int), nbr_c, 1);
+		get_nbr((ssize_t)va_arg(*l, int), nbr_c, 1);
 //if it's number or hex	|0x0000007ffdd8952118| and flag 0, add 0
 	if (zero_flag && (*s == 'd' || *s == 'i' || *s == 'u'
 			|| *s == 'x' || *s == 'X' || *s == 'p'))
@@ -80,6 +80,11 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		if (nbr_c[0] == '0' && s[-1] == '.' && s[0] == '0' && !ft_isdigit(s[1]))
 			return (0);
 		arg_width = ft_strlen(nbr_c);
+		if (*nbr_c == '-')
+		{
+			write(1, "-", 1);
+			ft_memmove(nbr_c, &nbr_c[1], arg_width);
+		}
 		if (*s == 'p' || (teller && *s == 'x'))
 			if (write(1, "0x", 2) == -1)
 				return (-1);
@@ -152,7 +157,7 @@ int	digit_amount(va_list *l, const char *s, int *i)
 		else if (s[j] == 'p')
 			get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 		else if (s[j] == 'd' || s[j] == 'i')
-			get_nbr(va_arg(*l, int), nbr_c, 1);
+			get_nbr((ssize_t)va_arg(*l, int), nbr_c, 1);
 		if (teller && s[j] == 'x')
 		{
 			if (write(1, "0x", 2) == -1)

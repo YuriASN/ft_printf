@@ -22,18 +22,18 @@ int	main(int argc, char **argv){
 	else if (argc > 1 && argv[1][0] == 'b')
 	{
 								// 1
-		r_origina = printf("This is the original printf: |%d|\n", -1);
-		r_mine = ft_printf("This is the ft vers. printf: |%d|\n", -1);
+		r_origina = printf("This is the original printf: |%04d|\n", -14);
+		r_mine = ft_printf("This is the ft vers. printf: |%04d|\n", -14);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 2
-		r_origina = printf("This is the original printf: |%-2d|\n", -1);
-		r_mine = ft_printf("This is the ft vers. printf: |%-2d|\n", -1);
+		r_origina = printf("This is the original printf: |%05d|\n", -15);
+		r_mine = ft_printf("This is the ft vers. printf: |%05d|\n", -15);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 3
-		r_origina = printf("This is the original printf: |%-17x|\n", nbr);
-		r_mine = ft_printf("This is the ft vers. printf: |%-17x|\n", nbr);
+		r_origina = printf("This is the original printf: |%06d|\n", -16);
+		r_mine = ft_printf("This is the ft vers. printf: |%06d|\n", -16);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 4
