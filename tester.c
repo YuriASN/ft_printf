@@ -1,7 +1,8 @@
 #include "ft_printf_bonus.h"
 #include <stdio.h>
 #include <limits.h>
-//cc tester.c libftprintf.a -o comp.out && echo "\n\n\n\n" && ./comp.out b
+//make fclean; rm ./comp.out;  make bonus
+//cc tester.c libftprintf.a -o comp.out && echo && echo && echo && ./comp.out b
 int	main(int argc, char **argv){
 	char	*str = "Will justiify.";
 	int		nbr = 1234;
@@ -21,13 +22,13 @@ int	main(int argc, char **argv){
 	else if (argc > 1 && argv[1][0] == 'b')
 	{
 								// 1
-		r_origina = printf("This is the original printf: |%#17x|\n", nbr);
-		r_mine = ft_printf("This is the ft vers. printf: |%#17x|\n", nbr);
+		r_origina = printf("This is the original printf: |%d|\n", -1);
+		r_mine = ft_printf("This is the ft vers. printf: |%d|\n", -1);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 2
-		r_origina = printf("This is the original printf: |%#017x|\n", nbr);
-		r_mine = ft_printf("This is the ft vers. printf: |%#017x|\n", nbr);
+		r_origina = printf("This is the original printf: |%-2d|\n", -1);
+		r_mine = ft_printf("This is the ft vers. printf: |%-2d|\n", -1);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 3
