@@ -133,6 +133,7 @@ Only works with numbers */
 int	digit_amount(va_list *l, const char *s, int *i)
 {
 	char	nbr_c[20];
+	char	*str;
 	int		width;
 	int		j;
 	int		teller;
@@ -143,9 +144,14 @@ int	digit_amount(va_list *l, const char *s, int *i)
 	if (s[-2] == '#')
 		teller = 2;
 	width = ft_atoi(s);
-	j = -1;
-	while (ft_isdigit(s[++j]))
+	j = 0;
+	while (ft_isdigit(s[j]))
+	{
 		(*i)++;
+		++j;
+	}
+	if (!width)
+		return (0);
 	if (s[j] == 'i' || s[j] == 'd' || s[j] == 'u'
 		|| s[j] == 'x' || s[j] == 'X')
 	{
@@ -157,6 +163,7 @@ int	digit_amount(va_list *l, const char *s, int *i)
 			get_unsig_long(va_arg(*l, unsigned long), nbr_c);
 		else if (s[j] == 'd' || s[j] == 'i')
 			get_nbr((ssize_t)va_arg(*l, int), nbr_c, 1);
+		j = ft_strlen(nbr_c);
 		if (teller && s[j] == 'x')
 		{
 			if (write(1, "0x", 2) == -1)
@@ -167,16 +174,31 @@ int	digit_amount(va_list *l, const char *s, int *i)
 			if (write(1, "0X", 2) == -1)
 				return (-1);
 		}
-		j = ft_strlen(nbr_c);
+		else if (*nbr_c == '-')
+		{
+			write(1, "-", 1);
+			ft_memmove(nbr_c, &nbr_c[1], 20);
+			width++;
+		}
 		while (j < width)
 			if (++j && write(1, "0", 1) == -1)
 				return (-1);
 		if (write(1, nbr_c, ft_strlen(nbr_c)) == -1)
 			return (-1);
 	}
-	if (j >= width)
-		return (j);
-	return (width);
+	else if (s[j] == 's')
+	{
+		str = (char *)va_arg(*l, char *);
+		j = 0;
+		while (j < width && j < ft_strlen(str))
+			if (++j && write(1, &str[j - 1], 1) == -1)
+				return (-1);
+	}
+	else
+		return (0);
+/*	if (j >= width)
+		return (j); */
+	return (j + teller);
 }
 
 /** @brief
