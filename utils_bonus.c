@@ -214,14 +214,22 @@ int	digit_amount(va_list *l, const char *s, int *i)
  * How many chars where printed, or -1 in case of error. */
 int	base_teller(va_list *l, const char *s, int *i)
 {
-	int	check;
+	int				check;
+	unsigned long	nbr;
+	va_list			cp;
 
+	nbr = 0;
 	(*i)++;
+	va_copy(cp, *l);
+	nbr = (va_arg(cp, unsigned long));
+	va_end(cp);
+	if (nbr == 0)
+		return (write(1, "0", 1));
 	if (s[0] == 'x')
 	{
 		if (write(1, "0x", 2) == -1)
 			return (-1);
-		check = f_putnbr_u(va_arg(*l, unsigned int), "0123456789abcdef", 16);
+		check = f_putnbr_u(va_arg(*l, unsigned long), "0123456789abcdef", 16);
 		if (check == -1)
 			return (-1);
 		return (check + 2);
@@ -230,8 +238,7 @@ int	base_teller(va_list *l, const char *s, int *i)
 	{
 		if (write(1, "0X", 2) == -1)
 			return (-1);
-		check = f_putnbr_u(va_arg(*l, unsigned int),
-				"0123456789ABCDEF", 16) + 2;
+		check = f_putnbr_u(va_arg(*l, unsigned long), "0123456789ABCDEF", 16);
 		if (check == -1)
 			return (-1);
 		return (check + 2);
@@ -243,19 +250,22 @@ int	base_teller(va_list *l, const char *s, int *i)
 /* puts space before a number if isn't negative. Only works with d or i flags */
 int	print_space(va_list *l, const char *s, int *i)
 {
-	int	nbr;
-	int	check;
+	ssize_t	nbr;
+	int		check;
 
 	(*i)++;
 	if (s[0] != 'd' && s[0] != 'i')
 		return (print_arg(l, s, i));
-	nbr = va_arg(*l, int);
+	nbr = (ssize_t)va_arg(*l, int);
 	if (nbr >= 0)
-		write(1, " ", 1);
+		if (write(1, " ", 1) == -1)
+			return (-1);
 	check = ft_putnbr_fd(nbr, 1);
 	if (check == -1)
 		return (-1);
-	return (check + 1);
+	if (nbr >= 0)
+		return (check + 1);
+	return (check);
 }
 
 /* puts a '+' before a number if isn't negative. Only works with d or i flags */
@@ -269,9 +279,12 @@ int	print_signal(va_list *l, const char *s, int *i)
 		return (print_arg(l, s, i));
 	nbr = va_arg(*l, int);
 	if (nbr >= 0)
-		write(1, "+", 1);
+		if (write(1, "+", 1) == -1)
+			return (-1);
 	check = ft_putnbr_fd(nbr, 1);
 	if (check == -1)
 		return (-1);
-	return (check + 1);
+	if (nbr >= 0)
+		return (check + 1);
+	return (check);
 }

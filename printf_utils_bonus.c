@@ -60,11 +60,11 @@ int	get_digits(ssize_t n)
 
 int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 {
-	int			count;
-	long long	n2;
+	int				count;
+	unsigned long	n2;
 
 	n2 = n;
-	count = base_conversor(n2, str, base);
+	count = ul_base_conversor(n2, str, base);
 	return (count);
 }
 
