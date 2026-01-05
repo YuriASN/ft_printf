@@ -215,16 +215,20 @@ int	digit_amount(va_list *l, const char *s, int *i)
 int	base_teller(va_list *l, const char *s, int *i)
 {
 	int				check;
-	unsigned long	nbr;
+	unsigned int	nbr;
 	va_list			cp;
 
 	nbr = 0;
 	(*i)++;
 	va_copy(cp, *l);
-	nbr = (va_arg(cp, unsigned long));
+	nbr = (va_arg(cp, unsigned int));
 	va_end(cp);
-	if (nbr == 0)
+//fprintf(stderr, "\nnbr = %u\n", nbr);
+	if (nbr <= 0)
+	{
+		nbr = va_arg(*l, unsigned long);
 		return (write(1, "0", 1));
+	}
 	if (s[0] == 'x')
 	{
 		if (write(1, "0x", 2) == -1)
