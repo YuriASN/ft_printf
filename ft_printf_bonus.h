@@ -17,5 +17,8 @@ int		print_signal(va_list *l, const char *s, int *i);
 void	get_unsig(unsigned int n, char base, char *conv);
 void	get_unsig_long(unsigned long n, char *conv);
 void	get_nbr(ssize_t n, char *conv, int sign);
+int		put_teller(char c);
+void	jump_digits(const char **str, int	*i);
+int		arg_to_str(va_list *l, char *str, char type);
 
 #endif

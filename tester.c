@@ -22,23 +22,23 @@ int	main(int argc, char **argv){
 	else if (argc > 1 && argv[1][0] == 'b')
 	{
 								// 1
-		r_origina = printf("This is the original printf: |% d|\n", -1);
-		r_mine = ft_printf("This is the ft vers. printf: |% d|\n", -1);
+		r_origina = printf("This is the original printf: |%2p|\n", -1);
+		r_mine = ft_printf("This is the ft vers. printf: |%2p|\n", -1);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 2
-		r_origina = printf("This is the original printf: |% d|\n", -9);
-		r_mine = ft_printf("This is the ft vers. printf: |% d|\n", -9);
+		r_origina = printf("This is the original printf: |%2p|\n", 0);
+		r_mine = ft_printf("This is the ft vers. printf: |%2p|\n", 0);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 3
-		r_origina = printf("This is the original printf: |% d|\n", INT_MIN);
-		r_mine = ft_printf("This is the ft vers. printf: |% d|\n", INT_MIN);
+		r_origina = printf("This is the original printf: |%12p|\n", 0);
+		r_mine = ft_printf("This is the ft vers. printf: |%12p|\n", 0);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 4
-		r_origina = printf("This is the original printf: |% d|\n", 9223372036854775807LL);
-		r_mine = ft_printf("This is the ft vers. printf: |% d|\n", 9223372036854775807LL);
+		r_origina = printf("This is the original printf: |%2p|\n", 25);
+		r_mine = ft_printf("This is the ft vers. printf: |%2p|\n", 25);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 								// 5
 		r_origina = printf("This is the original printf: |%#x %#x %#x %#x %#x %#x %#x|\n", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42);

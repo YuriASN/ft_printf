@@ -1,7 +1,8 @@
 NAME = libftprintf.a
 
 SRC = ft_printf.c	printf_utils.c
-BONUS = ft_printf_bonus.c	printf_utils_bonus.c	utils_bonus.c	get_conversions.c
+BONUS = ft_printf_bonus.c	printf_utils_bonus.c	bonus_flags.c	get_conversions.c \
+		bonus_utils.c
 
 OBJ = $(SRC:.c=.o)
 BNOBJ= $(BONUS:.c=.o)
