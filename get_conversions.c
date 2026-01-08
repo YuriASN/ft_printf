@@ -1,6 +1,7 @@
 #include "ft_printf_bonus.h"
 
-/** @brief Get the amount of digits the number will have in a base.
+/** @brief Get the amount of digits the number will
+ * have in a hex base.
  * @param nbr
  * Number to check for amount digits in hex base. */
 static int	hex_size_long(unsigned long nbr)
@@ -45,18 +46,18 @@ static int	convert_size_unsig(unsigned int nbr, char base)
 	return (count);
 }
 
-/** @brief Converte number to base 0, x or X.
+/** @brief Convert number to base 0, x or X.
  * @param n
  * Unsigned int to be converted to char*
  * @param base
  * Letter giving the base to be converted to.
  * @param conv
- * String that conversion will be set on.*/
+ * String that conversion will be written on.*/
 void	get_unsig(unsigned int n, char base, char *conv)
 {
 	char			*b;
 	unsigned int	size;
-//fprintf(stderr, "n = %ld\n", n);
+
 	size = 10;
 	if (base == 'x' || base == 'X')
 		size = 16;
@@ -71,16 +72,16 @@ void	get_unsig(unsigned int n, char base, char *conv)
 	conv[convert_size_unsig(n, base) - 1] = b[n % size];
 }
 
-/** @brief Converte number to hex base.
+/** @brief Convert number to hex base.
  * @param n
  * Unsigned long to be converted to char*
  * @param conv
- * String that conversion will be set on. */
+ * String that conversion will be written on. */
 void	get_unsig_long(unsigned long n, char *conv)
 {
 	char			*b;
 	unsigned long	size;
-//fprintf(stderr, "n = %ld\n", n);
+
 	size = 16;
 	b = "0123456789abcdef";
 	if (n >= size)
@@ -88,7 +89,7 @@ void	get_unsig_long(unsigned long n, char *conv)
 	conv[hex_size_long(n) - 1] = b[n % size];
 }
 
-/** @brief Transforms the int to char*. No allocation is done.
+/** @brief Transforms the number to char*.
  * @param n
  * Number to be converted in char*.
  * @param conv

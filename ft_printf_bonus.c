@@ -1,23 +1,45 @@
 #include "ft_printf_bonus.h"
 
+/** @brief
+ * Call handler functions of bonus flags
+ * accordingly to current char after %.
+ * @param l
+ * The list of arguments to be used on flags.
+ * @param c
+ * The string at the index of current flag.
+ * @param i
+ * Pointer with value of current index of previous parameter.
+ * @return
+ * Amount of characters put on stdout. */
 static int	print_bonus_arg(va_list *l, const char *c, int *i)
 {
-	//increment i accordingly to the flags, -1 that's already done.
-	if (c[0] == '-')	//in combination with a value sets the chars (next if) after the arg, instead of before
+	if (c[0] == '-')
 		return (justfy_left(l, &c[1], i));
-	if (ft_isdigit(c[0]))	//Gives the argument with minimum X amount of CHARS. In case the first number is 0 and arg is d or i, it adds zero to complement, otherwise add spaces.
+	if (ft_isdigit(c[0]))
 		return (justfy_right(l, c, i));
-	if (c[0] == '.')	//Gives the number with minimum X amount of DIGITS. adding zeros before the number it self
+	if (c[0] == '.')
 		return (digit_amount(l, &c[1], i));
-	if (c[0] == '#')	//Used with x or X flags, it adds 0x or 0X before the conversion respectively, only if value isn't 0.
+	if (c[0] == '#')
 		return (base_teller(l, &c[1], i));
-	if (c[0] == ' ')	//puts space before a number if isn't negative. Only works with d or i flags
+	if (c[0] == ' ')
 		return (print_space(l, &c[1], i));
-	if (c[0] == '+')	//puts a '+' before a number if isn't negative. Only works with d or i flags
+	if (c[0] == '+')
 		return (print_signal(l, &c[1], i));
-	return (write(1, "", 0));	//change to write the ""
+	return (write(1, "", 0));
 }
 
+/** @brief
+ * Call handler functions of normal flags
+ * accordingly to current char after %.
+ * If none found, call handler for bonus.
+ * @param l
+ * The list of arguments to be used on flags.
+ * @param c
+ * The string at the index of current flag.
+ * @param i
+ * Pointer with value of current index of previous parameter.
+ * @return
+ * Amount of characters put on stdout. */
 int	print_arg(va_list *l, const char *c, int *i)
 {
 	char	letter;
@@ -44,6 +66,15 @@ int	print_arg(va_list *l, const char *c, int *i)
 	return (print_bonus_arg(l, c, i));
 }
 
+/** @brief
+ * Write the given sring on stdout, changing it's flags
+ * for the value of parameter given.
+ * @param str
+ * String to be written.
+ * @param ...
+ * Variable amount of parameters to be used on place of the flags.
+ * @return
+ * Amount of characters that were written to stdout. */
 int	ft_printf(const char *str, ...)
 {
 	int		i;

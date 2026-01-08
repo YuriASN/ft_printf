@@ -34,7 +34,6 @@ libft:
 
 clean:
 	@/bin/rm -f *.o
-#	@$(MAKE) clean -Clibft/ --no-print-directory
 	@echo "\e[0;33mPrintf clean done!\e[0m"
 
 fclean: clean

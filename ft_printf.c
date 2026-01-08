@@ -1,5 +1,15 @@
 #include "ft_printf.h"
 
+/** @brief
+ * Call handler functions of normal flags
+ * accordingly to current char after %.
+ * If none found, return 0.
+ * @param l
+ * The list of arguments to be used on flags.
+ * @param c
+ * The char indicating the current flag.
+ * @return
+ * Amount of characters put on stdout. */
 static int	print_arg(va_list *l, char c)
 {
 	char	letter;
@@ -26,6 +36,15 @@ static int	print_arg(va_list *l, char c)
 	return (0);
 }
 
+/** @brief
+ * Write the given sring on stdout, changing it's flags
+ * for the value of parameter given.
+ * @param str
+ * String to be written.
+ * @param ...
+ * Variable amount of parameters to be used on place of the flags.
+ * @return
+ * Amount of characters that were written to stdout. */
 int	ft_printf(const char *str, ...)
 {
 	int		i;
@@ -51,19 +70,3 @@ int	ft_printf(const char *str, ...)
 	va_end(l);
 	return (count);
 }
-
-
-/* #include <stdio.h>
-int	main(void)
-{
-	char	*str = "Hello world!";
-	int		i = 145;
-	int		x;
-
-	x = printf("Essa porra vai dar %s | %i | addrs:%p\n", str, i, &i);
-	i = ft_printf("Essa porra vai dar %s | %i | addrs:%p\n", str, i, &i);
-	printf("i = %i  x = %i\n", i, x);
-
-	return (0);
-}
- */

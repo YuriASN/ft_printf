@@ -1,6 +1,15 @@
 #include "ft_printf_bonus.h"
 
-/* Convert the number (n) to the base (str) acoording to size of base (base) */
+/** @brief
+ * Print to stdout the given number on the given base.
+ * @param n
+ * Number to be converted.
+ * @param str
+ * String with the base to convert
+ * @param base
+ * Size of the base of str.
+ * @return
+ * Amount of characters that were put on stdout. */
 static int	base_conversor(ssize_t n, char *str, ssize_t base)
 {
 	int	count;
@@ -18,7 +27,16 @@ static int	base_conversor(ssize_t n, char *str, ssize_t base)
 	return (count);
 }
 
-/* Convert the unsigned long (n) to the base (str) acoording to size of base (base) */
+/** @brief
+ * Print to stdout the given unsigned long on the given base.
+ * @param n
+ * Unsigned long to be converted.
+ * @param str
+ * String with the base to convert
+ * @param base
+ * Size of the base of str.
+ * @return
+ * Amount of characters that were put on stdout. */
 static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 {
 	int	c;
@@ -39,7 +57,7 @@ static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 /** @brief
  * Returns the amount of digits that a number has,
  * without including the '-' in case of a negative number.
- * @param n The Number to count the digits.
+ * @param n The Number to count the digits from.
  * @return The amount of digits of the number. */
 int	get_digits(ssize_t n)
 {
@@ -58,6 +76,11 @@ int	get_digits(ssize_t n)
 	return (digits);
 }
 
+/** @brief
+ * Puts on stdout the unsigned int passed as a parameter on the given base.
+ * @param n Unsigned int to be displayed.
+ * @param str Base to be converted to.
+ * @param base Size of (str) base. */
 int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 {
 	int				count;
@@ -68,6 +91,10 @@ int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 	return (count);
 }
 
+/** @brief
+ * Puts on stdout the unsigned long passed as a parameter on the given base.
+ * Only used for 'p' flag (memory address).
+ * @param n Unsigned long to be displayed. */
 int	f_putnbr_ul(unsigned long n)
 {
 	int			count;

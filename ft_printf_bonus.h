@@ -3,8 +3,6 @@
 # include <stdarg.h>
 # include "libft/libft.h"
 
-//remove after done
-# include <stdio.h>
 int		ft_printf(const char *str, ...);
 int		print_arg(va_list *l, const char *c, int *i);
 int		get_digits(ssize_t n);

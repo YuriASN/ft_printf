@@ -1,6 +1,15 @@
 #include "ft_printf.h"
 
-/* Convert the number (n) to the base (str) acoording to size of base (base) */
+/** @brief
+ * Print to stdout the given number on the given base.
+ * @param n
+ * Number to be converted.
+ * @param str
+ * String with the base to convert
+ * @param base
+ * Size of the base of str.
+ * @return
+ * Amount of characters that were put on stdout. */
 static int	base_conversor(long long n, char *str, ssize_t base)
 {
 	int	c;
@@ -18,8 +27,16 @@ static int	base_conversor(long long n, char *str, ssize_t base)
 	return (c);
 }
 
-/* Convert the unsigned long (n) to the base (str)
-	acoording to size of base (base) */
+/** @brief
+ * Print to stdout the given unsigned long on the given base.
+ * @param n
+ * Unsigned long to be converted.
+ * @param str
+ * String with the base to convert
+ * @param base
+ * Size of the base of str.
+ * @return
+ * Amount of characters that were put on stdout. */
 static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 {
 	int	c;
@@ -37,6 +54,9 @@ static int	ul_base_conversor(unsigned long n, char *str, unsigned long base)
 	return (c);
 }
 
+/** @brief
+ * Puts on stdout the int passed as a parameter.
+ * @param n Int to be displayed. */
 int	f_putnbr(int n)
 {
 	int			count;
@@ -59,6 +79,11 @@ int	f_putnbr(int n)
 	return (count);
 }
 
+/** @brief
+ * Puts on stdout the unsigned int passed as a parameter on the given base.
+ * @param n Unsigned int to be displayed.
+ * @param str Base to be converted to.
+ * @param base Size of (str) base. */
 int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 {
 	int			count;
@@ -69,6 +94,10 @@ int	f_putnbr_u(unsigned int n, char *str, ssize_t base)
 	return (count);
 }
 
+/** @brief
+ * Puts on stdout the unsigned long passed as a parameter on the given base.
+ * Only used for 'p' flag (memory address).
+ * @param n Unsigned long to be displayed. */
 int	f_putnbr_ul(unsigned long n)
 {
 	int			count;
