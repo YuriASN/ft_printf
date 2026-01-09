@@ -54,3 +54,37 @@ int	arg_to_str(va_list *l, char *str, char type)
 	}
 	return (ft_strlen(str));
 }
+
+/** @brief
+ * Writes to stdout the amount of zeros needed
+ * to set arg to the asked minimum width.
+ * @param nbr_c
+ * The arg to be printed. A number on a sstring.
+ * @param teller
+ * Tells if the base x or X will be displayed before the arg.
+ * @param width
+ * The Minimum width to be written.
+ * @return
+ * The amount of chars written or -1 if error occurs. */
+int	add_zeros_nbr(char *nbr_c, int teller, int full_width, char current)
+{
+	int	arg_width;
+
+	arg_width = ft_strlen(nbr_c);
+	if (teller)
+		if (put_teller(current) == -1)
+			return (-1);
+	if (!teller && *nbr_c == '-')
+	{
+		if (write(1, "-", 1) == -1)
+			return (-1);
+		ft_memmove(nbr_c, &nbr_c[1], 20);
+		full_width++;
+	}
+	while (arg_width < full_width)
+		if (++arg_width && write(1, "0", 1) == -1)
+			return (-1);
+	if (write(1, nbr_c, ft_strlen(nbr_c)) == -1)
+		return (-1);
+	return (arg_width + teller);
+}

@@ -53,8 +53,8 @@ int	justfy_right(va_list *l, const char *s, int *i)
 	if (*s == '0')
 		zero_flag++;
 	jump_digits(&s, i);
-	if (*s == 'd' || *s == 'i' || *s == 'u' || *s == 'x'
-		|| *s == 'X' || *s == 'p')
+	if (*s == 'd' || *s == 'i' || *s == 'u'
+		|| *s == 'x' || *s == 'X' || *s == 'p')
 		arg_width = arg_to_str(l, nbr_c, *s);
 	if (zero_flag && (*s == 'd' || *s == 'i' || *s == 'u'
 			|| *s == 'x' || *s == 'X' || *s == 'p'))
@@ -62,16 +62,8 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		if (nbr_c[0] == '0' && s[-1] == '.' && s[0] == '0' && !ft_isdigit(s[1]))
 			return (0);
 		if (*nbr_c == '-')
-		{
-			write(1, "-", 1);
-			ft_memmove(nbr_c, &nbr_c[1], arg_width);
-		}
-		if (teller)
-			if (put_teller(*s) == -1)
-				return (-1);
-		while (arg_width + teller < full_width)
-			if (++arg_width && write(1, "0", 1) == -1)
-				return (-1);
+			full_width--;
+		return (add_zeros_nbr(nbr_c, teller, full_width, *s));
 	}
 	else
 	{
@@ -83,7 +75,7 @@ int	justfy_right(va_list *l, const char *s, int *i)
 			arg_width = ft_strlen(va_arg(cp, char *));
 			va_end(cp);
 		}
-		while (arg_width < full_width - teller)
+		while (arg_width < full_width)
 			if (++arg_width && write(1, " ", 1) == -1)
 				return (-1);
 		if (teller)
@@ -94,9 +86,27 @@ int	justfy_right(va_list *l, const char *s, int *i)
 		return (-1);
 	if (!nbr_c[0] && print_arg(l, s, i) == -1)
 		return (-1);
-	if (arg_width + teller >= full_width)
-		return (arg_width + teller);
+	if (arg_width >= full_width)
+		return (arg_width);
 	return (full_width);
+}
+
+/** @brief
+ * Write on stdout the string up to len chars, or end of string.
+ * @param str String to write.
+ * @param len Max amount of chars to be written.
+ * @return Amount written or -1 if error. */
+static int	put_str_len(char *str, int len)
+{
+	int	i;
+	int	str_len;
+
+	i = -1;
+	str_len = ft_strlen(str);
+	while (++i < len && i < str_len)
+		if (write(1, &str[i], 1) == -1)
+			return (-1);
+	return (i);
 }
 
 /* '.' Gives the number with minimum X amount of DIGITS.
@@ -105,9 +115,7 @@ Only works with numbers */
 int	digit_amount(va_list *l, const char *s, int *i)
 {
 	char	nbr_c[20];
-	char	*str;
 	int		width;
-	int		j;
 	int		teller;
 
 	teller = 0;
@@ -122,40 +130,12 @@ int	digit_amount(va_list *l, const char *s, int *i)
 	if (*s == 'i' || *s == 'd' || *s == 'u'
 		|| *s == 'x' || *s == 'X')
 	{
-		j = arg_to_str(l, nbr_c, *s);
-		if (teller && *s == 'x')
-		{
-			if (write(1, "0x", 2) == -1)
-				return (-1);
-		}
-		else if (teller && *s == 'X')
-		{
-			if (write(1, "0X", 2) == -1)
-				return (-1);
-		}
-		else if (*nbr_c == '-')
-		{
-			write(1, "-", 1);
-			ft_memmove(nbr_c, &nbr_c[1], 20);
-			width++;
-		}
-		while (j < width)
-			if (++j && write(1, "0", 1) == -1)
-				return (-1);
-		if (write(1, nbr_c, ft_strlen(nbr_c)) == -1)
-			return (-1);
+		arg_to_str(l, nbr_c, *s);
+		return (add_zeros_nbr(nbr_c, teller, width, *s));
 	}
 	else if (*s == 's')
-	{
-		str = (char *)va_arg(*l, char *);
-		j = 0;
-		while (j < width && j < ft_strlen(str))
-			if (++j && write(1, &str[j - 1], 1) == -1)
-				return (-1);
-	}
-	else
-		return (0);
-	return (j + teller);
+		return (put_str_len((char *)va_arg(*l, char *), width));
+	return (0);
 }
 
 /** @brief
