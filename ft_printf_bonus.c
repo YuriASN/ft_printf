@@ -14,9 +14,9 @@
 static int	print_bonus_arg(va_list *l, const char *c, int *i)
 {
 	if (c[0] == '-')
-		return (justfy_left(l, &c[1], i));
+		return (justify_left(l, &c[1], i));
 	if (ft_isdigit(c[0]))
-		return (justfy_right(l, c, i));
+		return (justify_right(l, c, i));
 	if (c[0] == '.')
 		return (digit_amount(l, &c[1], i));
 	if (c[0] == '#')

@@ -2,7 +2,7 @@
 
 /* '-' In combination with a value sets the chars (next if)
 after the arg, instead of before */
-int	justfy_left(va_list *l, const char *s, int *i)
+int	justify_left(va_list *l, const char *s, int *i)
 {
 	int	width;
 	int	j;
@@ -34,7 +34,7 @@ int	justfy_left(va_list *l, const char *s, int *i)
 /* Gives the argument with minimum X amount of CHARS. 
 In case the first number is 0 and arg is d or i, it adds
 zero to complement, otherwise add spaces. */
-int	justfy_right(va_list *l, const char *s, int *i)
+int	justify_right(va_list *l, const char *s, int *i)
 {
 	char	nbr_c[20];
 	int		full_width;
