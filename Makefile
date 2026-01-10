@@ -2,7 +2,7 @@ NAME = libftprintf.a
 
 SRC = ft_printf.c	printf_utils.c
 BONUS = ft_printf_bonus.c	printf_utils_bonus.c	bonus_flags.c	get_conversions.c \
-		bonus_utils.c
+		bonus_utils.c		justify_right.c			dot_flag.c
 
 OBJ = $(SRC:.c=.o)
 BNOBJ= $(BONUS:.c=.o)

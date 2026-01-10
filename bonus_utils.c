@@ -1,5 +1,18 @@
 #include "ft_printf_bonus.h"
 
+/** @brief 
+ * Returns true or false if the flag given is a flag for numbers.
+ * Covers the bases d, i, u, x or X.
+ * @param c Character to chek the flag.
+ * @return 1 if true, 0 if not. */
+int	is_nbr_flag(char c)
+{
+	if (c == 'd' || c == 'i' || c == 'u'
+		|| c == 'x' || c == 'X')
+		return (1);
+	return (0);
+}
+
 /** @brief
  * Writes to std out the given teller of base x, p or X.
  * @param base Base to be explicited on stdout.
@@ -80,6 +93,12 @@ int	add_zeros_nbr(char *nbr_c, int teller, int full_width, char current)
 			return (-1);
 		ft_memmove(nbr_c, &nbr_c[1], 20);
 		full_width++;
+	}
+	if (nbr_c[1] == 'x' || nbr_c[1] == 'X')
+	{
+		if (write(1, nbr_c, 2) == -1)
+			return (-1);
+		nbr_c += 2;
 	}
 	while (arg_width < full_width)
 		if (++arg_width && write(1, "0", 1) == -1)

@@ -21,5 +21,6 @@ int		put_teller(char c);
 void	jump_digits(const char **str, int	*i);
 int		arg_to_str(va_list *l, char *str, char type);
 int		add_zeros_nbr(char *nbr_c, int teller, int full_width, char current);
+int		is_nbr_flag(char c);
 
 #endif

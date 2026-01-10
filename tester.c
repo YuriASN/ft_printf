@@ -22,13 +22,13 @@ int	main(int argc, char **argv){
 	else if (argc > 1 && argv[1][0] == 'b')
 	{
 								// 1
-		r_origina = printf("This is the original printf: |%02d|\n", -42);
-		r_mine = ft_printf("This is the ft vers. printf: |%02d|\n", -42);
+		r_origina = printf("This is the original printf: |%06p|\n", 42);
+		r_mine = ft_printf("This is the ft vers. printf: |%06p|\n", 42);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 2
-		r_origina = printf("This is the original printf: |%012d|\n", -1);
-		r_mine = ft_printf("This is the ft vers. printf: |%012d|\n", -1);
+		r_origina = printf("This is the original printf: |%6p|\n", 42);
+		r_mine = ft_printf("This is the ft vers. printf: |%6p|\n", 42);
 		printf("Returns are\norgi: %d\nmine: %d\n\n", r_origina, r_mine);
 
 								// 3
