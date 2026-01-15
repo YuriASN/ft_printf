@@ -4,9 +4,9 @@ This project has been created as part of the 42 curriculum by ysantos-
 
 The ft_printf is a copy of printf() but with less options. It writes a string to standard output transforming arguments to string replacing its specifiers.  
 It writes to stdout the string that might contain specifiers that will be replaced by values that are passed as additional parameters.  
-The specifiers always come after an % as for example `%[flag][width][precision]specifier`.  
+The specifiers always come after a % as for example `%[flag][width][precision]specifier`.  
 
-On this project we learn variadic arguments, as you can have an unknown number of arguments may be passed as parameters. And handling many conversions to *char\** to display those arguments on stdout.
+On this project we learn variadic arguments, since an unknown number of arguments can be passed as a parameter. And handling many conversions to *char\** to display those arguments on stdout.
 
 | Specifier | Output |
 | :---- | :---- |
@@ -20,7 +20,7 @@ On this project we learn variadic arguments, as you can have an unknown number o
 | %X | Prints a number in hexadecimal (base 16) uppercase format.|
 | %% | Prints a percent sign. |
 
-The flags provided by the bonus part can have combinations of  `-0.` and the field minimum width (number) under all conversions. In addition it also manage all the following flags: `#(space)+`.  
+The flags provided by the bonus part can have combinations of  `-0.` and the field minimum width (number) under all conversions. In addition, it also handle all the following flags: `#(space)+`.  
 
 | Flags | Description |
 | :---- | :---- |
@@ -51,7 +51,7 @@ After making the library with the `make` or `make bonus` command, you need to li
 ### Usage
 
 Link the library on your **.c** or **.h** file as `PATH/ft_printf.h` or `PATH/ft_printf_bonus.h` depending on the version you want to use.  
-The function prototype is `ft_printf(char \*str, ...)`, Pass a string as argument and for every specifier, you add a argument for it, ex.:  
+The function prototype is `ft_printf(char \*str, ...)`, Pass a string as argument and for each specifier, you add a argument for it, for example:  
 `ft_printf("Hello %s! We're %d.", "world", 42);`  
 Where **%s** is replaced by **world**, and **%d** by **42**: `Hello world! We're 42.`. 
 
